@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="container mt-4">
+            <!-- Dropdown para seleção do ano do boletim -->
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Selecione o ano do boletim
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="{{ url_for('boletim', ano='2023') }}">2023</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('boletim', ano='2022') }}">2022</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('boletim', ano='2021') }}">2021</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('boletim', ano='2020') }}">2020</a></li>
+                </ul>
+                <a href="{{ url_for('index') }}" class="btn btn-success mb-4 float-end">
+                    <i class="fas fa-user me-1"></i> Usuário
+                </a>
+            </div>
+        <!-- Tabela do boletim -->
+        <div class="table-responsive bg-light mt-4">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Disciplina</th>
+                        <th scope="col">N1</th>
+                        <th scope="col">N2</th>
+                        <th scope="col">N3</th>
+                        <th scope="col">N4</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for disciplina in boletim %}
+                        <tr>
+                            <td>{{ disciplina['disciplina'] }}</td>
+                            <td>{{ disciplina['nota_etapa_1']['nota'] }}</td>
+                            <td>{{ disciplina['nota_etapa_2']['nota'] }}</td>
+                            <td>{{ disciplina['nota_etapa_3']['nota'] }}</td>
+                            <td>{{ disciplina['nota_etapa_4']['nota'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Botão de Logout -->
+        <div class="mt-4">
+            <a href="{{ url_for('logout') }}" class="btn btn-danger btn-lg ms-2">
+                <i class="fas fa-sign-out-alt me-1"></i> Logout
+            </a>
+        </div>
+    </div>
+{% endblock %}

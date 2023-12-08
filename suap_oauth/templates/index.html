@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                    <img src="{{ url_for('static', filename='images/suap.png') }}" class="card-img-top logo-image" alt="Logo">
+                    <div class="card-body text-center">
+                        <h2 class="card-title">Login OAuth SUAP</h2>
+                        <p class="card-text">Clique no botão abaixo para fazer login</p>
+                        <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

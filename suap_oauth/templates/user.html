@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container text-center mt-4">
+        <h2 class="fw-bold mb-4">{{ user_data['nome_usual'] }}</h2>
+        <div class="mb-4">
+            <img src="https://suap.ifrn.edu.br{{ user_data['url_foto_150x200'] }}" alt="foto" class="img-fluid rounded-circle" style="max-width: 200px;">
+            <div class="mt-4">
+                <a href="{{ url_for('boletim', ano=2023) }}" class="btn btn-primary">
+                    <i class="fas fa-file-alt me-1"></i> Acessar boletim
+                </a>
+                <a href="{{ url_for('logout') }}" class="btn btn-danger ms-2">
+                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <div class="table-responsive bg-light rounded-3 mt-4">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col" class="text-start">Campo</th>
+                        <th scope="col" class="text-start">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for field, value in user_data.items() %}
+                        {% if field == 'vinculo' %}
+                            {% for subfield, subvalue in user_data['vinculo'].items() %}
+                                <tr>
+                                    <td class="text-start fw-bold">{{ subfield }}</td>
+                                    <td class="text-start">{{ subvalue }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            {% if field == 'vínculos' %}
+                                {% if value is iterable and value is not string %}
+                                    {% for item in value %}
+                                        <tr>
+                                            <td class="text-start">{{ field }}</td>
+                                            <td class="text-start">{{ item }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% elif value is string %}
+                                    {% for item in value.split(',') %}
+                                        <tr>
+                                            <td class="text-start">{{ field }}</td>
+                                            <td class="text-start">{{ item.strip() }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td class="text-start">{{ field }}</td>
+                                        <td class="text-start">{{ value }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% else %}
+                                <tr>
+                                    <td class="text-start">{{ field }}</td>
+                                    <td class="text-start">{{ value }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
